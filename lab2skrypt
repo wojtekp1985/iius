@@ -1,0 +1,39 @@
+#!/bin/bash
+#script to add a user to Linux system
+i=0
+if [ $(id -u) -eq 0 ]; then
+	read -p "podaj imie: " userFirstName
+	read -p "podaj nazwisko: " userLastName
+	read -p "podaj numer pokoju: " roomNumber
+	firstletter=${userFirstName:0:1}
+	user="$firstletter$userLastName"
+	echo $user
+	egrep "^$user" /etc/passwd >/dev/null
+	#$? - wynik ostatniej operacji
+	if [ $? -eq 0 ]; then
+		echo "username exists!"
+		echo $i
+		egrep "^user" /etc/passwd >/dev/null
+		ifUserExist=$?
+		echo $ifUserExist
+		while [ $ifUserExist -eq 0 ]; do
+		user="$firstletter$userLastName$i"
+		echo $user
+		i=$(($i+1))
+		egrep "^$user" /etc/passwd >/dev/null
+		ifUserExist=$?	
+ 		done
+
+	fi
+	pass=$(perl -e 'print crypt($ARGV[0], "password")' $user)
+	useradd -m -p $pass $user 
+	mkdir /home/$user/publichtml
+	mkdir /home/$user/publichtml/privatehtml
+	sudo chown -R $user /home/$user/publichtml/privatehtml
+	chmod 700 /home/$user/publichtml/privatehtml
+	mkdir /home/$user/publicsamba
+else
+	echo "Only root may add a user to the system you fuckface"
+fi
+	echo "$user:$userFirstName:$userLastName:$roomNumber" | sudo tee -a  userrooms >/dev/null
+ 
