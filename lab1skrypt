@@ -1,30 +1,24 @@
 #!/bin/bash
 #odczytanie wersji systemu
-lsb_release -a >> "wersjasystemu.$(date +"%Y%m%d:%T")"
+lsb_release -a >> ~/lab1/skrypt/wersjasystemu/"wersjasystemu.$(date +"%Y%m%d:%T")"
 #odczytanie wersji jądra
-uname -a >> "wersjakernela.$(date +"%Y%m%d:%T")"
+uname -a >> ~/lab1/skrypt/wersjakernela/"wersjakernela.$(date +"%Y%m%d:%T")"
 #lista uzytkownikow
-getent passwd >> "uzytkownicy.$(date +"%Y%m%d:%T")"
+getent passwd >> ~/lab1/skrypt/uzytkownicy/"uzytkownicy.$(date +"%Y%m%d:%T")"
 #lista grup
-getent group | cut -d: -f1 | sort | cat -n >>"grupy.$(date +"%Y%m%d:%T")"
+getent group | cut -d: -f1 | sort | cat -n >> ~/lab1/skrypt/grupy/"grupy.$(date +"%Y%m%d:%T")"
 #lista interfejsów sieciowych
-ip link show >>"interfejsysieciowe.$(date +"%Y%m%d:%T")"
+ip link show >> ~/lab1/skrypt/interfejsysieciowe/"interfejsysieciowe.$(date +"%Y%m%d:%T")"
 #wykaz działających procesów
-ps -aux >>"procesy1.$(date +"%Y%m%d:%T")"
+ps -aux >> ~/lab1/skrypt/procesy1/"procesy1.$(date +"%Y%m%d:%T")"
 #wykaz działających procesów 2
-ps -A >>"procesy.$(date +"%Y%m%d:%T")"
+ps -A >>~/lab1/skrypt/procesy/"procesy.$(date +"%Y%m%d:%T")"
 #usługi sieciowe
-ss -a -p >>"uslugisieciowe.$(date +"%Y%m%d:%T")"
+ss -a -p >>~/lab1/skrypt/uslugisieciowe/"uslugisieciowe.$(date +"%Y%m%d:%T")"
 #firewall
-iptables -L>>"firewall.$(date +"%Y%m%d:%T")"
+iptables -L>>~/lab1/skrypt/firewall/"firewall.$(date +"%Y%m%d:%T")"
 #zajetość dysku
-df -h >>"punktymontowania.$(date +"%Y%m%d:%T")"
+df -h >>~/lab1/skrypt/punktymontowania/"punktymontowania.$(date +"%Y%m%d:%T")"
 #punkty montownia
-mount >>"punktymontowania1.$(date +"%Y%m%d:%T")"
-
-
-
-
-
-
+mount >>~/lab1/skrypt/punktymontowania1/"punktymontowania1.$(date +"%Y%m%d:%T")"
 
