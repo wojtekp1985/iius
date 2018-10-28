@@ -1,0 +1,5 @@
+#!/bin/bash
+#egrep "uzytkownik" /etc/passwd | grep -o -E ',[0-9]*,,'|grep -o -E '[0-9]*'
+read -p "podaj login użytkownika dla którego chcesz sprawdzić pokój: " userRoom
+echo "numer pokoju użytkownika $userRoom to:" 
+egrep "$userRoom:" /etc/passwd | grep -o -E ',[0-9]*,,'|grep -o -E '[0-9]*'
