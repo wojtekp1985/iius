@@ -13,9 +13,7 @@ if [ $(id -u) -eq 0 ]; then
 	if [ $? -eq 0 ]; then
 		echo "username exists!"
 		echo $i
-		#egrep sprawdza czy uzytkownik znjduje sie w systemie >/dev/null
-		#usuwa wszystkie wygenerowane poleceniem dane -> niszczarka
-		egrep "^$user" /etc/passwd >/dev/null
+		egrep "^user" /etc/passwd >/dev/null
 		ifUserExist=$?
 		echo $ifUserExist
 		while [ $ifUserExist -eq 0 ]; do
@@ -33,6 +31,7 @@ if [ $(id -u) -eq 0 ]; then
 	#tworzenie katalogu
 	mkdir /home/$user/publichtml
 	mkdir /home/$user/publichtml/privatehtml
+	sudo chown -R $user /home/$user/publichtml
 	#zmaiana właściciela katalogu
 	sudo chown -R $user /home/$user/publichtml/privatehtml
 	chmod 700 /home/$user/publichtml/privatehtml
@@ -41,10 +40,11 @@ if [ $(id -u) -eq 0 ]; then
 	usermod --shell /bin/bash $user
 	#ustawianie aliasow
 	echo "alias wylistuj='ls -l'" >> /home/$user/.bash_aliases && source /home/$user/.bash_aliases
+	echo "alias pokoj=/etc/./pokoj" >> /home/$user/.bash_aliases && source /home/$user/.bash_aliases
 	#dodawanie pokoju do passwd
 	chfn -r $roomNumber $user
 else
 	echo "Only root may add a user to the system you fuckface"
 fi
 	echo "$user:$userFirstName:$userLastName:$roomNumber" | sudo tee -a  userrooms >/dev/null
- 
+ 	chage -d 0 $user
